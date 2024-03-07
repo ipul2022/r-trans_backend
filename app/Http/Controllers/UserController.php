@@ -38,7 +38,8 @@ class UserController extends Controller
             'phone'=>'required|unique:users',
             'email'=>'required|email|unique:users',
             'password'=>'required',
-            'roles'=>'user'
+            'roles'=>'user',
+            
         ]);
 
 if($validator -> fails()){
@@ -49,7 +50,8 @@ if($validator -> fails()){
             'email'=>request('email'),
             'phone'=>request('phone'),
             'password'=>Hash::make(request('password')),
-            'roles'=>'user'
+            'roles'=>'user',
+
         ]);
     //    $token = auth::user();
       //    $token = Str::random(60);
