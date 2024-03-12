@@ -35,7 +35,7 @@ Route::group([
     Route::get('get-profile',[DriverController::class, 'get_profile']);
     Route::post('update-profile',[DriverController::class, 'update']);
     //
-    Route::get('get-order',[DriverController::class, 'get_order']);
+    Route::get('get-order-ride',[DriverController::class, 'get_order']);
     Route::get('get-order-shop',[DriverController::class, 'get_order_shop']);
     Route::get('get-order-pickup',[DriverController::class, 'get_order_pickup']);
 
@@ -43,7 +43,7 @@ Route::group([
     Route::post('update-password',[DriverController::class, 'update_password']);
     Route::get('get-list-shop',[DriverController::class, 'get_list_shop']);
     Route::get('get-list-ride',[DriverController::class, 'get_list_ride']);
-    Route::get('get-list',[DriverController::class, 'get_list_pickup']);
+    Route::get('get-list-pickup',[DriverController::class, 'get_list_pickup']);
     //
     Route::post('update-status',[DriverController::class, 'update_status']);
 

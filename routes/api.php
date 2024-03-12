@@ -72,4 +72,6 @@ Route::group([
     Route::get('get-List-pickup',[OrderController::class, 'get_List_pickup']);
     Route::post('delete-order/{id}',[OrderController::class, 'delete_order']);
 
+    //place_api_autocomplete
+    Route::get('search',[UserController::class, 'place_api_autocomplete']);
 });

@@ -20,6 +20,8 @@ use Illuminate\Mail\Message;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
+use Nette\Schema\Helpers;
 
 class UserController extends Controller
 {
@@ -39,7 +41,7 @@ class UserController extends Controller
             'email'=>'required|email|unique:users',
             'password'=>'required',
             'roles'=>'user',
-            
+
         ]);
 
 if($validator -> fails()){
@@ -375,5 +377,21 @@ $user->update([
             // ]
 
         ]);
+    }
+
+
+    //
+
+    public function place_api_autocomplete(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'search_text' => 'required',
+        ]);
+
+        if ($validator->errors()->count()>0) {
+            return response()->json(['errors' => 'data tidak ada'], 403);
+        }
+        $response = Http::get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input='.$request['search_text'].'&key='.'AIzaSyDVcR2dzl7R5I7IK0-w_FR_O6SY8XlIFXo');
+        return $response->json();
     }
 }

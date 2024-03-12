@@ -80,9 +80,7 @@ try{
     public function get_profile(){
         try{
             if ($user = auth()->user()) {
-                return response()->json([
-                    'data'=>$user
-                ],201);
+                return $user;
             }
         }catch (Exception){
             return response()->json(
@@ -91,8 +89,6 @@ try{
                 ],401
             );
         }
-
-
     }
     //
 
@@ -141,10 +137,16 @@ if($validator -> fails()){
     $receipt  = Receipt::where('driver_id',$user->id)
     ->where('status','Active')
     ->where('service','R-Ride')
-    ->with('driver:id,name,phone,jenis_kendaraan,nomor_kendaraan',
-    'order:id,user_id,alamat_penjemputan,alamat_tujuan,jadwal_pengantaran','order.user:id,name,phone')
+    ->with(
+    'order:id,user_id,alamat_penjemputan,alamat_tujuan,jadwal_pengantaran,service',
+    'order.user:id,image,name,phone')
     ->get();
-    return response()->json(['data' => $receipt],201);
+    return response()->json([
+        'status'=>[
+            'message'=>'get order berhasil'
+        ],
+            'data'=>$receipt
+    ],201);
 
     }
     public function get_order_pickup()
@@ -202,7 +204,7 @@ public function update_password(Request $request){
 
 // get list on order selesai
 
-public function get_List_pickup()
+public function get_list_pickup()
 {
 
 $user     = Auth::user();
@@ -222,7 +224,7 @@ return response()->json([
 }
 
 
-public function get_List_ride()
+public function get_list_ride()
 {
 
 $user     = Auth::user();
@@ -231,7 +233,7 @@ $receipt  = Receipt::where('driver_id',$user->id)
 ->where('service','R-Ride')
 ->select('id','jarak','tarif','status','driver_id','user_id','order_id','service','created_at')
 ->with('driver:id,name',
-'order:id,user_id,alamat_penjemputan,alamat_tujuan,jadwal_pengantaran','user:id,name')
+'order:id,user_id,alamat_penjemputan,alamat_tujuan,jadwal_pengantaran,service','user:id,name')
 ->get();
 
 return response()->json([
@@ -241,7 +243,7 @@ return response()->json([
     'data'=>$receipt],201);
 }
 
-public function get_List_shop()
+public function get_list_shop()
 {
 
 $user     = Auth::user();

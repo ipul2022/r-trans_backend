@@ -141,7 +141,7 @@ $user = $this->getAuthUser();
     $receipt  = Receipt::where('user_id',$user->id)
     ->where('service','R-Ride')
     ->where('status','Active')
-    ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan,phone',
+    ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan,phone,image',
     'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jadwal_pengantaran')
     ->get();
 
@@ -162,7 +162,7 @@ $user     = Auth::user();
 $receipt  = Receipt::where('user_id',$user->id)
 ->where('service','R-Pickup')
 ->where('status','Active')
-->with('driver:id,name,nomor_kendaraan,jenis_kendaraan,phone',
+->with('driver:id,name,nomor_kendaraan,jenis_kendaraan,phone,image',
 'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,dana_talangan,berat_barang,jenis_barang')
 ->get();
 
@@ -183,7 +183,7 @@ $user     = Auth::user();
 $receipt  = Receipt::where('user_id',$user->id)
 ->where('service','R-Shop')
 ->where('status','Active')
-->with('driver:id,name,nomor_kendaraan,jenis_kendaraan,phone',
+->with('driver:id,name,nomor_kendaraan,jenis_kendaraan,phone,image',
 'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jenis_barang,dana_talangan,jumlah_barang')
  ->latest()->get();
 
