@@ -109,9 +109,9 @@
                                                         <div class="section-header-button">
 
                                                             @If($receipts=='Active')
-                                                            <a href="{{ route('receipt.edit' , $receipts->id)}}" class="btn btn-primary">Di Proses</a>
+                                                            <a " class="btn btn-primary">Di Proses</a>
                                                        @else($receipts=='Done')
-                                                        <a href="{{ route('receipt.edit' , $receipts->id)}}" class="btn btn-primary">Di Proses</a>
+                                                        <a " class="btn btn-primary">Di Proses</a>
                                                        @endif
                                                         </div>
 

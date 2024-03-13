@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Driver;
+use App\Models\Receipt;
 use Illuminate\Http\Request;
 
 class PickupController extends Controller
@@ -25,7 +27,12 @@ class PickupController extends Controller
      */
     public function create()
     {
-        //
+        $orders = Order::where('status','diproses')
+        ->where('service','R-Pickup')
+        ->with('user:id,name')
+        ->get();
+        $receipt = Driver::where('status','off')->get();
+        return view('pages.pickup.create',compact('orders','receipt'));
     }
 
     /**
@@ -33,7 +40,28 @@ class PickupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $profile = new Receipt;
+        $profile->jarak = $request->input('jarak');
+        $profile->tarif = $request->input('tarif');
+        $profile->service = $request->input('service');
+        $profile->driver_id = $request->input('driver_id');
+        $profile->order_id = $request->input('order_id');
+        $profile->user_id = $request->input('user_id');
+        $profile->save();
+   $request->validate([
+           'status' => 'selesai',
+        ]);
+        $user = Order::find($profile->order_id);
+        $user->status = 'selesai';
+        $user->update();
+        $request->validate([
+            'status' => 'on',
+         ]);
+        $user = Driver::find($profile->driver_id);
+        $user->status = 'on';
+        $user->update();
+        return redirect()->route('receipt.index')->with('success', 'Your info are updated');
+
     }
 
     /**

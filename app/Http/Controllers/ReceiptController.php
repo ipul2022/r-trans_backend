@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Driver;
 use App\Models\Order;
+use App\Models\Driver;
 use App\Models\Receipt;
 use Illuminate\Http\Request;
 
@@ -26,6 +26,7 @@ class ReceiptController extends Controller
     public function create()
     {
         $orders = Order::where('status','diproses')
+        ->where('service','R-Ride')
         ->with('user:id,name')
         ->get();
         $receipt = Driver::where('status','off')->get();

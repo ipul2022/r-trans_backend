@@ -119,7 +119,7 @@
                                                     <div class="d-flex justify-content-center">
 
                                                         <div class="section-header-button">
-                                                            <a href="{{ route('receipt.create') }}" class="btn btn-primary">Teruskan</a>
+                                                            <a href="{{ route('shop.create') }}" class="btn btn-primary">Teruskan</a>
                                                         </div>
 
                                                     </div>
