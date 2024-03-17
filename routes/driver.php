@@ -46,5 +46,6 @@ Route::group([
     Route::get('get-list-pickup',[DriverController::class, 'get_list_pickup']);
     //
     Route::post('update-status',[DriverController::class, 'update_status']);
+    Route::post('update-location',[DriverController::class, 'update_location']);
 
 });

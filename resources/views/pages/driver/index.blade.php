@@ -58,6 +58,8 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Phone</th>
+                                            <th>Status</th>
+                                            <th>Location</th>
                                             {{-- <th>Roles</th> --}}
                                             <th>Created At</th>
                                             <th>Action</th>
@@ -75,6 +77,12 @@
                                                 </td>
                                                 <td>
                                                     {{ $driver->phone }}
+                                                </td>
+                                                <td>
+                                                    {{ $driver->status }}
+                                                </td>
+                                                <td>
+                                                    {{ $driver->location }}
                                                 </td>
                                                 {{-- <td>
                                                     {{ $driver->roles }}

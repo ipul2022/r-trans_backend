@@ -41,11 +41,19 @@ class UserController extends Controller
             'email'=>'required|email|unique:users',
             'password'=>'required',
             'roles'=>'user',
-
+            'image'     => 'required|image|mimes:png,jpg,jpeg'
         ]);
 
 if($validator -> fails()){
     return response()->json($validator->messages(),401);
+}
+if ($request->has("image")) {
+    $image_path = public_path("storage/images/" . $request->image);
+    $file = $request->image;
+    if (File::exists($image_path)) {
+    }
+    $imageName = url("storage/images/" . time() . "_" . $file->getClientOriginalName());
+    $file->move(public_path("storage/images/"), $imageName);
 }
         $user = User::create([
             'name'=>request('name'),
@@ -53,7 +61,7 @@ if($validator -> fails()){
             'phone'=>request('phone'),
             'password'=>Hash::make(request('password')),
             'roles'=>'user',
-
+            'image' => $imageName
         ]);
     //    $token = auth::user();
       //    $token = Str::random(60);

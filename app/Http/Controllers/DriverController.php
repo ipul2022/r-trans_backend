@@ -372,4 +372,26 @@ $user = Driver::find($user->id);
 return response()->json(['message'=>'orderan selesai']);
 }
 //
+
+
+
+public function update_location(Request $request)
+{
+    $this->validate($request, [
+        'location' => 'required',
+    ]);
+
+if($user = Driver::find(Auth::user()->id)){
+
+    $user->location = $request->location;
+    $user->save();
+
+    return response()->json(['message' => 'update location berhasil'],201);
+
+}else{
+
+    return response()->json(['message' => 'update location gagal'], 500);
+
+}
+}
 }
