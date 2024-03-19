@@ -27,7 +27,7 @@
                                     <h4>Add order</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label>Jarak</label>
                                         <input type="text"
                                             class="form-control @error('jarak')
@@ -39,8 +39,8 @@
                                                     {{$message}}
                                                 </div>
                                             @enderror
-                                    </div>
-                                    <div class="form-group">
+                                    </div> --}}
+                                    {{-- <div class="form-group">
                                         <label>Tarif</label>
                                         <input type="text"
                                             class="form-control @error('tarif')
@@ -52,7 +52,7 @@
                                                 {{$message}}
                                             </div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
                                         <label>Order ID</label>
                                        <select name="order_id" class="form-control">

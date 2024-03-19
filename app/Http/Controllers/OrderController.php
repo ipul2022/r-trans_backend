@@ -30,6 +30,8 @@ class OrderController extends Controller
             'gender_driver'=>'required',
             'jadwal_pengantaran'=>'required',
             'service'=>'R-Ride',
+            'tarif'=>'required',
+            'jarak'=>'required',
         ]);
 
 
@@ -40,9 +42,12 @@ class OrderController extends Controller
            $user->order()->create([
                 'alamat_penjemputan'=> request('alamat_penjemputan'),
                 'alamat_tujuan'=> request('alamat_tujuan'),
-                'jadwal_pengantaran'=> request('jadwal_pengantaran'),
                 'gender_driver'=> request('gender_driver'),
+                'jadwal_pengantaran'=> request('jadwal_pengantaran'),
+                'jarak'=> request('jarak'),
+                'tarif'=> request('tarif'),
                 'service'=> 'R-Ride',
+
             ]);
             return response()->json([
                 'message'=>'Create Order Berhasil',
@@ -65,6 +70,8 @@ public function create_order_shop(Request $request)
         'jumlah_barang'=>'required',
         'dana_talangan'=>'required',
         'service'=>'R-Shop',
+        'tarif'=>'required',
+        'jarak'=>'required',
     ]);
 
 
@@ -80,6 +87,8 @@ $user = $this->getAuthUser();
             'jenis_barang'=> request('jenis_barang'),
             // 'alamat_pengantaran'=> request('alamat_pengantaran'),
             'service'=> 'R-Shop',
+            'jarak'=> request('jarak'),
+            'tarif'=> request('tarif'),
         ]);
         return response()->json([
             'message'=>'Create Order Berhasil',
@@ -104,6 +113,8 @@ public function create_order_pickup(Request $request)
         'berat_barang'=>'required',
         'dana_talangan'=>'required',
         'service'=>'R-Pickup',
+        'tarif'=>'required',
+        'jarak'=>'required',
     ]);
 
 if($validator -> fails()){
@@ -118,6 +129,8 @@ $user = $this->getAuthUser();
             'jenis_barang'=> request('jenis_barang'),
             // 'alamat_pengantaran'=> request('alamat_pengantaran'),
             'service'=> 'R-Pickup',
+            'jarak'=> request('jarak'),
+            'tarif'=> request('tarif'),
         ]);
         return response()->json([
             'message'=>'Create Order Berhasil',
@@ -142,7 +155,7 @@ $user = $this->getAuthUser();
     ->where('service','R-Ride')
     ->where('status','Active')
     ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan,phone,image',
-    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jadwal_pengantaran')
+    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jadwal_pengantaran,tarif,jarak')
     ->get();
 
 
@@ -163,7 +176,7 @@ $receipt  = Receipt::where('user_id',$user->id)
 ->where('service','R-Pickup')
 ->where('status','Active')
 ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan,phone,image',
-'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,dana_talangan,berat_barang,jenis_barang')
+'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,dana_talangan,berat_barang,jenis_barang,tarif,jarak')
 ->get();
 
 
@@ -184,7 +197,7 @@ $receipt  = Receipt::where('user_id',$user->id)
 ->where('service','R-Shop')
 ->where('status','Active')
 ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan,phone,image',
-'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jenis_barang,dana_talangan,jumlah_barang')
+'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jenis_barang,dana_talangan,jumlah_barang,tarif,jarak')
  ->latest()->get();
 
 
@@ -224,7 +237,7 @@ return response()->json(['message'=>'SuccessFuly Update']);
     ->where('service','R-Ride')
     ->where('status','Done')
     ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan',
-    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jadwal_pengantaran')
+    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jadwal_pengantaran,tarif,jarak')
 
      ->latest()
     ->get();
@@ -245,7 +258,7 @@ return response()->json(['message'=>'SuccessFuly Update']);
     ->where('service','R-Shop')
     ->where('status','Done')
     ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan',
-    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jenis_barang,dana_talangan,jumlah_barang')
+    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jenis_barang,dana_talangan,jumlah_barang,tarif,jarak')
      ->latest()
     ->get();
     return response()->json([
@@ -264,7 +277,7 @@ return response()->json(['message'=>'SuccessFuly Update']);
     ->where('service','R-Pickup')
     ->where('status','Done')
     ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan',
-    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,dana_talangan,berat_barang,jenis_barang')
+    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,dana_talangan,berat_barang,jenis_barang,tarif,jarak')
      ->latest()
     ->get();
     return response()->json([

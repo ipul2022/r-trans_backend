@@ -3,6 +3,7 @@
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -74,4 +75,7 @@ Route::group([
 
     //place_api_autocomplete
     Route::get('search',[UserController::class, 'place_api_autocomplete']);
+
+    //price
+    Route::get('get-price',[PriceController::class, 'get_price']);
 });

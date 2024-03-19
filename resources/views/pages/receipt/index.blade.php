@@ -55,11 +55,10 @@
                                     <table class="table-striped table">
                                         <tr>
                                             <th>ID</th>
+                                            <th>User</th>
                                             <th>Jarak</th>
                                             <th>Tarif</th>
                                             <th>Driver</th>
-                                            <th>User</th>
-
                                             <th>Service</th>
                                             <th>Status</th>
                                             <th>Action</th>
@@ -70,17 +69,17 @@
                                                     {{ $receipts->id }}
                                                 </td>
                                                 <td>
-                                                    {{ $receipts->jarak }}
+                                                    {{ $receipts->user->name }}
                                                 </td>
                                                 <td>
-                                                    {{ $receipts->tarif }}
+                                                    {{ $receipts->order->jarak }}
+                                                </td>
+                                                <td>
+                                                    {{ $receipts->order->tarif }}
                                                 </td>
 
                                                 <td>
                                                     {{ $receipts->driver->name }}
-                                                </td>
-                                                <td>
-                                                    {{ $receipts->user->name }}
                                                 </td>
                                                 <td>
                                                     {{ $receipts->order->service }}

@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('jumlah_barang')->nullable();
             $table->string('dana_talangan')->nullable();
             $table->string('berat_barang')->nullable();
+            $table->string('jarak');
+            $table->string('tarif');
             $table->string('status')->default('diproses');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

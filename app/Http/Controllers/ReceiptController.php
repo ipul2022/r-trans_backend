@@ -15,7 +15,7 @@ class ReceiptController extends Controller
     public function index()
     {
         $receipt = Receipt::where('status','Active')
-        ->with('driver:id,name','user:id,name','order:id,service')
+        ->with('driver:id,name,location','user:id,name','order:id,service,tarif,jarak')
         ->paginate(10);
         return view('pages.receipt.index', compact('receipt'));
     }
@@ -29,7 +29,8 @@ class ReceiptController extends Controller
         ->where('service','R-Ride')
         ->with('user:id,name')
         ->get();
-        $receipt = Driver::where('status','off')->get();
+        $receipt = Driver::where('status','off')
+        ->get();
         return view('pages.receipt.create',compact('orders','receipt'));
     }
 
@@ -57,8 +58,8 @@ class ReceiptController extends Controller
 
         // return redirect(route('receipt.index'))->with('success', 'Send Order Successfully');
         $profile = new Receipt;
-        $profile->jarak = $request->input('jarak');
-        $profile->tarif = $request->input('tarif');
+        // $profile->jarak = $request->input('jarak');
+        // $profile->tarif = $request->input('tarif');
         $profile->service = $request->input('service');
         $profile->driver_id = $request->input('driver_id');
         $profile->order_id = $request->input('order_id');

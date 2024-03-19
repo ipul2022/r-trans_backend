@@ -13,7 +13,7 @@ class ListPickupController extends Controller
     public function index()
     {
         $receipt = Receipt::where('status','Done')
-        ->with('driver:id,name','user:id,name','order:id,service')
+        ->with('driver:id,name','user:id,name','order:id,service,tarif,jarak')
         ->paginate(10);
         return view('pages.listPickup.index', compact('receipt'));
     }

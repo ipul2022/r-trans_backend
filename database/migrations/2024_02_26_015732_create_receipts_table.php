@@ -13,8 +13,6 @@ return new class extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
-            $table->string('jarak');
-            $table->integer('tarif');
             // $table->enum('status', [
             //     'Active',
             //     'Done',

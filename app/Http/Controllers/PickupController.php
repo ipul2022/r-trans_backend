@@ -41,8 +41,8 @@ class PickupController extends Controller
     public function store(Request $request)
     {
         $profile = new Receipt;
-        $profile->jarak = $request->input('jarak');
-        $profile->tarif = $request->input('tarif');
+        // $profile->jarak = $request->input('jarak');
+        // $profile->tarif = $request->input('tarif');
         $profile->service = $request->input('service');
         $profile->driver_id = $request->input('driver_id');
         $profile->order_id = $request->input('order_id');

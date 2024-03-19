@@ -27,7 +27,7 @@
                                     <h4>Add order</h4>
                                 </div>
                                 <div class="card-body">
-                                    <div class="form-group">
+                                    {{-- <div class="form-group">
                                         <label>Jarak</label>
                                         <input type="text"
                                             class="form-control @error('jarak')
@@ -39,8 +39,8 @@
                                                     {{$message}}
                                                 </div>
                                             @enderror
-                                    </div>
-                                    <div class="form-group">
+                                    </div> --}}
+                                    {{-- <div class="form-group">
                                         <label>Tarif</label>
                                         <input type="text"
                                             class="form-control @error('tarif')
@@ -52,7 +52,7 @@
                                                 {{$message}}
                                             </div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group">
                                         <label>Order ID</label>
                                        <select name="order_id" class="form-control">
@@ -94,18 +94,17 @@
                                         @endforeach
                                        </select>
                                     </div>
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-    Dropdown button
-  </button>
-  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-    <li><a class="dropdown-item active" href="#">Action</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
-    <li><a class="dropdown-item" href="#">Something else here</a></li>
-    <li><hr class="dropdown-divider"></li>
-    <li><a class="dropdown-item" href="#">Separated link</a></li>
-  </ul>
-</div>
+                                    {{-- <div class="form-group">
+                                        <label>Driver Location</label>
+                                       <select name="driver_id" class="form-control">
+                                        <option value="">-pilih-</option>
+                                        @foreach ($receipt as $receipts )
+                                        <option value="{{$receipts->id}}">{{$receipts->location}}</option>
+
+                                        @endforeach
+                                       </select>
+                                    </div> --}}
+
                                     {{-- <div class="form-group mb-0">
                                         <label>Address</label>
                                         <textarea class="form-control"

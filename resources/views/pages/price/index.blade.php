@@ -11,13 +11,13 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>List Receipt</h1>
+                <h1>Update Price</h1>
 
-                <div class="section-header-breadcrumb">
+                {{-- <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Receipt</a></div>
-                    {{-- <div class="breadcrumb-item">All Orders</div> --}}
-                </div>
+                    <div class="breadcrumb-item"><a href="#">Price</a></div>
+
+                </div> --}}
             </div>
             <div class="section-body">
 
@@ -30,16 +30,16 @@
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <h4>Order Yang Sudah Selesai</h4>
+                            {{-- <div class="card-header">
+                                <h4>Order Yang Sedang Di Proses</h4> --}}
                                 {{-- <div class="section-header-button">
                                     <a href="{{ route('order.order.proses') }}" class="btn btn-primary">New Order</a>
                                 </div> --}}
-                            </div>
+                            {{-- </div> --}}
                             <div class="card-body">
 
-                                <div class="float-right">
-                                    <form method="GET", action="{{ route('listPickup.index') }}">
+                                {{-- <div class="float-right">
+                                    <form method="GET", action="{{ route('receipt.index') }}">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search" name="name">
                                             <div class="input-group-append">
@@ -47,7 +47,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                </div>
+                                </div> --}}
 
                                 <div class="clearfix mb-3"></div>
 
@@ -55,59 +55,54 @@
                                     <table class="table-striped table">
                                         <tr>
                                             <th>ID</th>
-                                            <th>User</th>
-                                            <th>Jarak</th>
-                                            <th>Tarif</th>
-                                            <th>Driver</th>
-                                            <th>Service</th>
+                                            <th>Price</th>
                                             <th>Created</th>
-                                            <th>Status</th>
-
+                                            <th>Update</th>
+                                            <th>Action</th>
                                         </tr>
-                                        @foreach ($receipt as $receipts)
+                                        @foreach ($price as $prices)
                                             <tr>
                                                 <td>
-                                                    {{ $receipts->id }}
+                                                    {{ $prices->id }}
                                                 </td>
                                                 <td>
-                                                    {{ $receipts->user->name }}
+                                                    {{ $prices->price }}
                                                 </td>
                                                 <td>
-                                                    {{ $receipts->order->jarak }}
+                                                    {{ $prices->created_at }}
                                                 </td>
                                                 <td>
-                                                    {{ $receipts->order->tarif }}
+                                                    {{ $prices->updated_at }}
                                                 </td>
 
-                                                <td>
-                                                    {{ $receipts->driver->name }}
-                                                </td>
-                                                <td>
-                                                    {{ $receipts->order->service }}
-                                                </td>
-                                                <td>
-                                                    {{ $receipts->created_at }}
-                                                </td>
-                                                <td>
-                                                    <div>
-                                                        <button class="btn btn-success">
-                                                            <i class=""></i> {{ $receipts->status}}
-                                                        </button>
-                                                    </div>
-                                                </td>
+
 
 
 
                                                 {{-- <td>
                                                 <select name="order_id" class="form-control">
-                                                    <option value="">{{$receipts->status}}</option>
-                                                    @foreach ($receipt as $receipts )
-                                                    <option value="{{$receipts->status}}">{{$receipts->status}}</option>
+                                                    <option value="">{{$prices->status}}</option>
+                                                    @foreach ($price as $prices )
+                                                    <option value="{{$prices->status}}">{{$prices->status}}</option>
 
                                                     @endforeach
                                                    </select>
                                                 </td> --}}
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
 
+                                                        <div class="section-header-button">
+
+                                                            <a href='{{ route('price.edit', $prices->id )}}'
+                                                                class="btn btn-sm btn-info btn-icon">
+                                                                <i class="fas fa-edit"></i>
+                                                                Edit
+                                                            </a>
+                                                        </div>
+
+                                                    </div>
+
+                                                </td>
                                             </tr>
                                         @endforeach
 
@@ -115,9 +110,9 @@
 
                                     </table>
                                 </div>
-                                <div class="float-right">
-                                    {{ $receipt->withQueryString()->links() }}
-                                </div>
+                                {{-- <div class="float-right">
+                                    {{ $price->withQueryString()->links() }}
+                                </div> --}}
                             </div>
                         </div>
                     </div>

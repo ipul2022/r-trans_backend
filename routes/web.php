@@ -5,6 +5,7 @@ use App\Http\Controllers\ListOrderController;
 use App\Http\Controllers\ListPickupController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PickupController;
+use App\Http\Controllers\PriceController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\WebAdminController;
@@ -115,7 +116,7 @@ Route::middleware(['auth'])->group(function () {
         $driver = Driver::count();
         $user = User::where('roles','user')->count();
         $receipt = Receipt::count();
-        $tarif = Receipt::sum('tarif');
+        $tarif = Order::sum('tarif');
         $drivers = Order::paginate();
         $receipts = Receipt::
         select('user_id','order_id','driver_id','created_at')
@@ -222,6 +223,9 @@ Route::middleware(['auth'])->group(function () {
     //
     Route::resource('driver', WebAdminController::class);
     Route::resource('receipt', ReceiptController::class);
+
+    //
+    Route::resource('price', PriceController::class);
 });
 //         $yearNow = date('Y');
 // $tarifs = Receipt::select(

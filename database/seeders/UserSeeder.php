@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\AcceptOrder;
 use Illuminate\Database\Seeder;
 use App\Models\Driver;
+use App\Models\Price;
 use App\Models\User;
 
 class UserSeeder extends Seeder
@@ -77,6 +78,10 @@ class UserSeeder extends Seeder
             'phone'=>'0858445466229',
             'roles' => 'admin',
             'password' => bcrypt('123456')
+        ]);
+        Price::create([
+            'price' => '10000',
+
         ]);
 
     }
