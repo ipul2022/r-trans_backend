@@ -42,12 +42,18 @@ Route::group([
     Route::post('upload-image',[UserController::class, 'upload_image']);
    // Route::get('image/{path}', [UserController::class, 'getImage'])->where('path', '.*');
     Route::post('logout',[UserController::class, 'logout']);
+    Route::post('refresh-token',[UserController::class, 'refresh']);
 
     //
 
 
     // order by user
-  // Route::get('get-order',[OrderController::class, 'get_order']);
+   Route::get('get-order-shop',[OrderController::class, 'get_order_shop']);
+   Route::get('get-order-ride',[OrderController::class, 'get_order_ride']);
+   Route::get('get-order-pickup',[OrderController::class, 'get_order_pickup']);
+   Route::get('get-total',[OrderController::class, 'get_total']);
+
+  //
     Route::post('create-order',[OrderController::class, 'create_order']);
     Route::post('create-order-shop',[OrderController::class, 'create_order_shop']);
     Route::post('create-order-pickup',[OrderController::class, 'create_order_pickup']);

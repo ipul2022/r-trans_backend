@@ -26,18 +26,18 @@ Route::post('reset-password',[DriverController::class, 'get_password']);
 Route::post('register',[DriverController::class, 'register']);
 Route::post('login',[DriverController::class, 'login']);
 Route::group([
-
     'middleware' => 'auth:sanctum',
-
 ], function ($router) {
 
-    //
+    //refreshToken
     Route::get('get-profile',[DriverController::class, 'get_profile']);
     Route::post('update-profile',[DriverController::class, 'update']);
+    Route::post('refresh-token',[DriverController::class, 'refreshToken']);
     //
     Route::get('get-order-ride',[DriverController::class, 'get_order']);
     Route::get('get-order-shop',[DriverController::class, 'get_order_shop']);
     Route::get('get-order-pickup',[DriverController::class, 'get_order_pickup']);
+    Route::get('get-total',[DriverController::class, 'get_total']);
 
     //
     Route::post('update-password',[DriverController::class, 'update_password']);

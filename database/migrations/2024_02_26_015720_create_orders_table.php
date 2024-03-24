@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
         //    $table->enum('service_type', ['R-Ride'=> ServiceTypeEnum::R_Ride, 'R-Shop'=> ServiceTypeEnum::R_Shop,'R-Pickup'=> ServiceTypeEnum::R_Pickup])->default(ServiceTypeEnum::R_Ride);
-        $table->string('service');
-        $table->string('gender_driver')->nullable();
+            $table->string('service');
+            $table->string('gender_driver')->nullable();
             $table->string('jenis_kendaraan')->nullable();
             $table->string('alamat_penjemputan')->nullable();
             $table->string('alamat_tujuan')->nullable();
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('jenis_barang')->nullable();
             $table->string('jumlah_barang')->nullable();
             $table->string('dana_talangan')->nullable();
+            $table->string('catatan')->nullable();
             $table->string('berat_barang')->nullable();
             $table->string('jarak');
             $table->string('tarif');

@@ -242,7 +242,13 @@ return response()->json([
 ],
     'data'=>$receipt],201);
 }
+public function refreshToken(Request $request)
+    {
+        $user = $request->user();
+        $token = $user->createToken('AuthToken')->plainTextToken;
 
+        return response()->json(['token' => $token]);
+    }
 public function get_list_shop()
 {
 
@@ -393,5 +399,28 @@ if($user = Driver::find(Auth::user()->id)){
     return response()->json(['message' => 'update location gagal'], 500);
 
 }
+}
+public function get_total()
+{
+    try {
+
+        $user = Auth::user();
+        $driverId = $user->id;
+        $tarif = Order::whereHas('receipts', function ($query) use ($driverId) {
+        $query->where('driver_id', $driverId);
+        })->sum('tarif');
+
+        $tarifs = Receipt::where('driver_id',$user->id)
+        ->select('order_id')
+        ->with('order:id,id')
+        ->count();
+        return response()->json([
+                'total_transaksi' => $tarif,
+                'total_order' => $tarifs,
+            ]);
+
+    } catch(Exception $e) {
+        return response()->json(['error'],403);
+    }
 }
 }

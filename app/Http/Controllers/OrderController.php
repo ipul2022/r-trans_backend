@@ -9,11 +9,13 @@ use App\Models\Order;
 use App\Models\Receipt;
 use App\Models\RecieptOrderModel;
 use App\Models\User;
+use App\Settings;
+use Carbon\Carbon;
 use Exception;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Setting;
 class OrderController extends Controller
 {
     /**
@@ -32,6 +34,8 @@ class OrderController extends Controller
             'service'=>'R-Ride',
             'tarif'=>'required',
             'jarak'=>'required',
+            'jenis_kendaraan'=>'required',
+            'catatan'=>'required',
         ]);
 
 
@@ -45,7 +49,9 @@ class OrderController extends Controller
                 'gender_driver'=> request('gender_driver'),
                 'jadwal_pengantaran'=> request('jadwal_pengantaran'),
                 'jarak'=> request('jarak'),
+                'jenis_kendaraan'=> request('jenis_kendaraan'),
                 'tarif'=> request('tarif'),
+                'catatan'=> request('catatan'),
                 'service'=> 'R-Ride',
 
             ]);
@@ -72,6 +78,7 @@ public function create_order_shop(Request $request)
         'service'=>'R-Shop',
         'tarif'=>'required',
         'jarak'=>'required',
+        'catatan'=>'required'
     ]);
 
 
@@ -88,6 +95,7 @@ $user = $this->getAuthUser();
             // 'alamat_pengantaran'=> request('alamat_pengantaran'),
             'service'=> 'R-Shop',
             'jarak'=> request('jarak'),
+            'catatan'=> request('catatan'),
             'tarif'=> request('tarif'),
         ]);
         return response()->json([
@@ -115,6 +123,7 @@ public function create_order_pickup(Request $request)
         'service'=>'R-Pickup',
         'tarif'=>'required',
         'jarak'=>'required',
+        'catatan'=>'required',
     ]);
 
 if($validator -> fails()){
@@ -130,6 +139,7 @@ $user = $this->getAuthUser();
             // 'alamat_pengantaran'=> request('alamat_pengantaran'),
             'service'=> 'R-Pickup',
             'jarak'=> request('jarak'),
+            'catatan'=> request('catatan'),
             'tarif'=> request('tarif'),
         ]);
         return response()->json([
@@ -155,7 +165,7 @@ $user = $this->getAuthUser();
     ->where('service','R-Ride')
     ->where('status','Active')
     ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan,phone,image',
-    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jadwal_pengantaran,tarif,jarak')
+    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jadwal_pengantaran,tarif,jarak,catatan')
     ->get();
 
 
@@ -176,7 +186,7 @@ $receipt  = Receipt::where('user_id',$user->id)
 ->where('service','R-Pickup')
 ->where('status','Active')
 ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan,phone,image',
-'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,dana_talangan,berat_barang,jenis_barang,tarif,jarak')
+'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,dana_talangan,berat_barang,jenis_barang,tarif,jarak,catatan')
 ->get();
 
 
@@ -197,7 +207,7 @@ $receipt  = Receipt::where('user_id',$user->id)
 ->where('service','R-Shop')
 ->where('status','Active')
 ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan,phone,image',
-'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jenis_barang,dana_talangan,jumlah_barang,tarif,jarak')
+'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jenis_barang,dana_talangan,jumlah_barang,tarif,jarak,catatan')
  ->latest()->get();
 
 
@@ -237,7 +247,7 @@ return response()->json(['message'=>'SuccessFuly Update']);
     ->where('service','R-Ride')
     ->where('status','Done')
     ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan',
-    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jadwal_pengantaran,tarif,jarak')
+    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jadwal_pengantaran,tarif,jarak,created_at')
 
      ->latest()
     ->get();
@@ -258,7 +268,7 @@ return response()->json(['message'=>'SuccessFuly Update']);
     ->where('service','R-Shop')
     ->where('status','Done')
     ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan',
-    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jenis_barang,dana_talangan,jumlah_barang,tarif,jarak')
+    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,jenis_barang,dana_talangan,jumlah_barang,tarif,jarak,created_at')
      ->latest()
     ->get();
     return response()->json([
@@ -277,7 +287,7 @@ return response()->json(['message'=>'SuccessFuly Update']);
     ->where('service','R-Pickup')
     ->where('status','Done')
     ->with('driver:id,name,nomor_kendaraan,jenis_kendaraan',
-    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,dana_talangan,berat_barang,jenis_barang,tarif,jarak')
+    'order:id,user_id,alamat_penjemputan,alamat_tujuan,service,dana_talangan,berat_barang,jenis_barang,tarif,jarak,created_at')
      ->latest()
     ->get();
     return response()->json([
@@ -376,5 +386,69 @@ return redirect()->route('order.index');
 
 
 
+    public function get_order_ride()
+    {
+    $user     = Auth::user();
+    $receipt  = Order::where('user_id',$user->id)
+    ->where('service','R-Ride')
+    ->where('status','diproses')
+     ->latest()->get();
+    return response()->json([
+        'status'=>[
+            'message'=>'succes'
+        ],
+        'data'=>$receipt
 
+    ]);
+    }
+    public function get_order_shop()
+    {
+    $user     = Auth::user();
+    $receipt  = Order::where('user_id',$user->id)
+    ->where('service','R-Shop')
+    ->where('status','diproses')
+     ->latest()->get();
+    return response()->json([
+        'status'=>[
+            'message'=>'succes'
+        ],
+        'data'=>$receipt
+
+    ]);
+    }
+    public function get_order_pickup()
+    {
+    $user     = Auth::user();
+    $receipt  = Order::where('user_id',$user->id)
+    ->where('service','R-Pickup')
+    ->where('status','diproses')
+     ->latest()->get();
+    return response()->json([
+        'status'=>[
+            'message'=>'succes'
+        ],
+        'data'=>$receipt
+
+    ]);
+    }
+    public function get_total(Request $request)
+    {
+        try {
+            $tarif = Order::where('user_id', Auth::user()->id)
+            ->sum('tarif');
+            $tarifs = Order::where('user_id', Auth::user()->id)
+            ->count();
+                    // ->where('status', 'selesai')
+                    // ->where('created_at', '>=', Carbon::today())
+                    // ->get();
+
+            return response()->json([
+                    'total_transaksi' => $tarif,
+                    'total_order' => $tarifs,
+                ]);
+
+        } catch(Exception $e) {
+            return response()->json(['error']);
+        }
+    }
 }
