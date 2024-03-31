@@ -83,6 +83,10 @@
                                         <label>Jenis Kelamin</label>
                                         <input type="text" class="form-control" name="gender">
                                     </div>
+                                    <div class="form-group">
+                                        <label>Alamat</label>
+                                        <input type="text" class="form-control" name="location">
+                                    </div>
                                     {{-- <div class="form-group">
                                         <label class="font-weight-bold">Driver Image</label>
                                         <input type="file" class="form-control @error('image') is-invalid @enderror" name="image">

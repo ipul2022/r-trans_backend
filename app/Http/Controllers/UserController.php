@@ -6,6 +6,7 @@ use App\Http\Requests\ImageStoreRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Image;
 use App\Models\PasswordReset;
+use App\Models\Price;
 use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Support\Str;
@@ -402,4 +403,12 @@ $user->update([
         $response = Http::get('https://maps.googleapis.com/maps/api/place/autocomplete/json?input='.$request['search_text'].'&key='.'AIzaSyDVcR2dzl7R5I7IK0-w_FR_O6SY8XlIFXo');
         return $response->json();
     }
+
+    // public function get_price(){
+    //     $user = Auth::user();
+    //     $price = Price::get();
+    //     return response()->json([
+    //         $price
+    //     ]);
+    // }
 }

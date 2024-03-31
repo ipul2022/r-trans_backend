@@ -48,6 +48,7 @@ class WebAdminController extends Controller
             'nomor_kendaraan' => 'required',
             'phone' => 'string',
             'gender' => 'string',
+            'location' => 'required',
             'image'     => 'required|image|mimes:png,jpg,jpeg'
         ]);
         if ($request->has("image")) {
@@ -75,7 +76,7 @@ class WebAdminController extends Controller
         // $request->image->storeAs('storage/images', $imageName);
 
         $postData = [
-             'name' => $request->name,
+            'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'jenis_kendaraan' => $request->jenis_kendaraan,
@@ -83,6 +84,7 @@ class WebAdminController extends Controller
             'roles' => $request->roles,
             'gender' => $request->gender,
             'phone' => $request->phone,
+            'location' => $request->location,
 
         'image' => $imageName];
 

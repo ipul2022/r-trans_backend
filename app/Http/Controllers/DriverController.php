@@ -138,7 +138,7 @@ if($validator -> fails()){
     ->where('status','Active')
     ->where('service','R-Ride')
     ->with(
-    'order:id,user_id,alamat_penjemputan,alamat_tujuan,jadwal_pengantaran,service',
+    'order:id,user_id,alamat_penjemputan,alamat_tujuan,jadwal_pengantaran,service,tarif,jarak',
     'order.user:id,image,name,phone')
     ->get();
     return response()->json([
@@ -157,7 +157,7 @@ if($validator -> fails()){
     ->where('status','Active')
     ->where('service','R-Pickup')
     ->with('driver:id,name,phone,jenis_kendaraan,nomor_kendaraan',
-    'order:id,user_id,alamat_penjemputan,alamat_tujuan,dana_talangan,jenis_barang,berat_barang','order.user:id,name,phone')
+    'order:id,user_id,alamat_penjemputan,alamat_tujuan,dana_talangan,jenis_barang,berat_barang,tarif,jarak','order.user:id,name,phone')
     ->get();
     return response()->json(['data' => $receipt],201);
 
@@ -170,7 +170,7 @@ if($validator -> fails()){
     ->where('status','Active')
     ->where('service','R-Shop')
     ->with('driver:id,name,phone,jenis_kendaraan,nomor_kendaraan',
-    'order:id,user_id,alamat_penjemputan,alamat_tujuan,dana_talangan,jenis_barang,jumlah_barang','order.user:id,name,phone')
+    'order:id,user_id,alamat_penjemputan,alamat_tujuan,dana_talangan,jenis_barang,jumlah_barang,tarif,jarak','order.user:id,name,phone')
     ->get();
     return response()->json(['data' => $receipt],201);
 
@@ -211,9 +211,9 @@ $user     = Auth::user();
 $receipt  = Receipt::where('driver_id',$user->id)
 ->where('status','Done')
 ->where('service','R-Pickup')
-->select('id','jarak','tarif','status','driver_id','user_id','order_id','service','created_at')
+->select('id','status','driver_id','user_id','order_id','service','created_at','updated_at')
 ->with('driver:id,name',
-'order:id,user_id,alamat_penjemputan,alamat_tujuan,dana_talangan,jenis_barang,berat_barang','user:id,name')
+'order:id,user_id,jarak,tarif,alamat_penjemputan,alamat_tujuan,dana_talangan,jenis_barang,berat_barang,created_at,updated_at','user:id,name')
 ->get();
 
 return response()->json([
@@ -231,9 +231,9 @@ $user     = Auth::user();
 $receipt  = Receipt::where('driver_id',$user->id)
 ->where('status','Done')
 ->where('service','R-Ride')
-->select('id','jarak','tarif','status','driver_id','user_id','order_id','service','created_at')
+->select('id','status','driver_id','user_id','order_id','service','created_at','updated_at')
 ->with('driver:id,name',
-'order:id,user_id,alamat_penjemputan,alamat_tujuan,jadwal_pengantaran,service','user:id,name')
+'order:id,user_id,alamat_penjemputan,alamat_tujuan,jadwal_pengantaran,service,created_at,updated_at,jarak,tarif','user:id,name')
 ->get();
 
 return response()->json([
@@ -256,9 +256,9 @@ $user     = Auth::user();
 $receipt  = Receipt::where('driver_id',$user->id)
 ->where('status','Done')
 ->where('service','R-Shop')
-->select('id','jarak','tarif','status','driver_id','user_id','order_id','service','created_at')
+->select('id','status','driver_id','user_id','order_id','service','created_at','updated_at')
 ->with('driver:id,name',
-'order:id,user_id,alamat_penjemputan,alamat_tujuan,dana_talangan,jenis_barang,jumlah_barang','user:id,name')
+'order:id,user_id,alamat_penjemputan,alamat_tujuan,dana_talangan,jenis_barang,jumlah_barang,created_at,updated_at,jarak,tarif','user:id,name')
 ->get();
 
 // $success['status']  =   "success";
@@ -403,7 +403,6 @@ if($user = Driver::find(Auth::user()->id)){
 public function get_total()
 {
     try {
-
         $user = Auth::user();
         $driverId = $user->id;
         $tarif = Order::whereHas('receipts', function ($query) use ($driverId) {
